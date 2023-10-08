@@ -8,10 +8,11 @@ part 'poem_state.dart';
 
 class PoemBloc extends Bloc<PoemEvent, PoemState> {
   final Poem poem;
-  final CacheService cacheService;
+  final PoemsUseCase poemsUseCase;
   PoemBloc({
     required this.poem
-  }) : cacheService = CacheService.instance,
+  }) : 
+  poemsUseCase = PoemsUseCase(),
     super(
       PoemState(
         poem: poem 
@@ -30,19 +31,7 @@ class PoemBloc extends Bloc<PoemEvent, PoemState> {
     PoemAction event,
     Emitter<PoemState> emit,
   ) async {
-
-    var poems = cacheService.getPoems();
-    poems = poems.map<Poem>((e) {
-      if(e.title == poem.title) {
-       return e.copyWith(isFavorite: event.isFavorite);
-      } else {
-        return e;
-      }
-    }).toList();
-
-    
-
-    cacheService.savePoems(poems);
+    poemsUseCase.poemMakeFavorite(poem,event.isFavorite);
     emit(state.copyWith(
       poem: poem.copyWith(
         isFavorite: event.isFavorite

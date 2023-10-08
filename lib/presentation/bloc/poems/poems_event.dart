@@ -16,8 +16,6 @@ final class PoemsLoad extends PoemsEvent {
   });
 }
 
-final class PoemsCheckUpdates extends PoemsEvent {}
-
 final class PoemsSortByType extends PoemsEvent {
   final Topics value;
 

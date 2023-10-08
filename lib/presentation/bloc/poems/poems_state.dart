@@ -9,17 +9,6 @@ sealed class PoemsState extends Equatable {
 
 final class PoemsLoading extends PoemsState {}
 
-final class PoemsCheckForUpdate extends PoemsState {
-  final bool needsForUpdate;
-
-  const PoemsCheckForUpdate({
-    required this.needsForUpdate
-  });
-
-  @override
-  List<Object?> get props => [needsForUpdate];  
-}
-
 final class PoemsLoaded extends PoemsState {
   final List<Poem> poems;
   final Topics value;

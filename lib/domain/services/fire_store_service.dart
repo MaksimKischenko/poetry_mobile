@@ -13,17 +13,11 @@ class FireStoreService {
   final _fireBase = FirebaseFirestore.instance;
 
 
-   Future<Either<Failure, DocumentSnapshot<Map<String, dynamic>>>?> getPoemsCollection() async {
-    try {
-      final collection = await _fireBase.collection(CollectionData.poems.name).doc(CollectionData.poems.docId).get();
-
-      return Right(collection);  
-    } on FirebaseException catch (e) {
-  
-      return Left(FireBaseFailure(error: e));
-       
-    }
+  Future<DocumentSnapshot<Map<String, dynamic>>> getPoemsCollection() async {
+    return await _fireBase.collection(CollectionData.poems.name).
+      doc(CollectionData.poems.docId).get();
   }
+  
 
   Future<Either<Failure, DocumentSnapshot<Map<String, dynamic>>>?> getUrlLinks() async {
     try {
@@ -37,8 +31,9 @@ class FireStoreService {
     }
   }
 
-
   Future<void> clearData() async {
     return await _fireBase.clearPersistence();
   } 
+
+
 }
